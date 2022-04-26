@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"type="text/javascript" charset="utf-8"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"type="text/javascript" charset="utf-8"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css"href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+</head>
+
+<body style='margin: 0; background-color:6E92A1;'>
+
+<div style="height: 100%;
+  width: 260px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  background-color: 297A4A;
+  padding-top: 20px;" id="sidenav">
+<form method="post" action=".">
+        <label><p>Enter Latitude</p></label>
+        <input name="lat">
+
+        <label><p> Enter Longitude</p></label>
+        <input name="long">
+
+        <input type="submit" value="Submit" id="button">
+    </form>
+</div>
+<div style="width:50%; height: 50%; margin:auto" id="mapContainer"></div>
+
+<script>
+      var platform = new H.service.Platform({
+        'apikey': 'DWdyYq-j4j0qhZY7s_8ys5PKLt0E3iLIlgCopy6Q4fA'
+      });
+
+	   const lat = {{lat}};
+	   const long = {{long}};
+
+      var maptypes = platform.createDefaultLayers();
+
+      var map = new H.Map(
+        document.getElementById('mapContainer'),
+        maptypes.raster.terrain.map,
+        {
+          zoom: 10,
+          center: { lat: lat, lng: long }
+        });
+
+	  var mapEvents = new H.mapevents.MapEvents(map);
+
+	  map.addEventListener('tap', function(evt) {
+      console.log(evt.type, evt.currentPointer.type);
+});
+
+	 var behavior = new H.mapevents.Behavior(mapEvents);
+
+	window.addEventListener('resize',()=> get.ViewProt().resize())
+	var marker = new H.map.Marker({ lat: lat, lng: long });
+
+	map.addObject(marker);
+
+	var ui = H.ui.UI.createDefault(map, maptypes);
+
+
+</script>
+</body>
+</html>
